@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Main Page</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Montserrat", sans-serif !important;
+        background-color: black;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .header {
+        text-align: center;
+        color: white;
+        letter-spacing: 0.5em;
+        font-size: 2.5em;
+        margin-top: 5%;
+      }
+      .add-button {
+        background-color: white;
+        color: #33b2e5;
+        width: 10em;
+        height: 2em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+        font-size: 1em;
+        border: none;
+      }
+      .add-button:hover {
+        cursor: pointer;
+      }
+      .sub-header {
+        color: white;
+        font-size: 2em;
+        text-align: center;
+        margin-top: 1.5em;
+      }
+      .question {
+        color: #33b2e5;
+      }
+      .list {
+        margin-left: 5%;
+      }
+      .list-row {
+        display: flex;
+        flex-direction: row;
+      }
+      .list-item {
+        width: 15em;
+        padding: 2em;
+      }
+      .list-container {
+        height: 5em;
+        border: 1px solid white;
+        margin-bottom: 5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .form {
+        background-color: #33b2e5;
+        width: 30%;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 2em;
+      }
+      .input {
+        width: 90%;
+        margin-bottom: 2em;
+        padding: 1em;
+      }
+      .polls {
+        margin: auto;
+      }
+      .row {
+        display: flex;
+        flex-direction: column;
+      }
+      .list-item-row {
+        width: 15em;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="header">Polls App</h1>
+    <form class="form" method="post">
+      {% csrf_token %}
+      <input
+        placeholder="Type your poll here ..."
+        class="input"
+        id="your_question"
+        type="text"
+        name="your_question"
+        value="{{ current_question }}"
+      />
+      <input
+        placeholder="Type your choices separated by commas here.."
+        class="input"
+        id="your_choices"
+        type="text"
+        name="your_choices"
+        value="{{ current_choices }}"
+      />
+      <button class="add-button" type="submit">Add Poll</button>
+    </form>
+    <div class="row">
+      <div class="polls">
+        <div class="sub-header">Recently Published Polls :</div>
+        {% if latest_question_list %}
+        <ul class="list-row">
+          {% for question in latest_question_list %}
+          <div class="list-container">
+            <li class="list-item-row">
+              <a href="/{{ question.id }}/details" class="question"
+                >{{ question.question_text }}</a
+              >
+            </li>
+          </div>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="question">No Polls</p>
+        {% endif %}
+      </div>
+      <div class="polls">
+        <div class="sub-header">All Polls :</div>
+        {% if all_polls_list %}
+        <ul class="list">
+          {% for question in all_polls_list %}
+          <div class="list-container">
+            <li class="list-item">
+              <a href="/{{ question.id }}/details" class="question"
+                >{{ question.question_text }}</a
+              >
+            </li>
+          </div>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="question">No Polls</p>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
