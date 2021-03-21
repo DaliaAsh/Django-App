@@ -97,6 +97,10 @@
         width: 15em;
         text-align: center;
       }
+      .message {
+        text-align: center;
+        color: #33b2e5;
+      }
     </style>
   </head>
   <body>
@@ -137,7 +141,7 @@
           {% endfor %}
         </ul>
         {% else %}
-        <p class="question">No Polls</p>
+        <p class="message">No Polls</p>
         {% endif %}
       </div>
       <div class="polls">
@@ -155,7 +159,7 @@
           {% endfor %}
         </ul>
         {% else %}
-        <p class="question">No Polls</p>
+        <p class="message">No Polls</p>
         {% endif %}
       </div>
     </div>

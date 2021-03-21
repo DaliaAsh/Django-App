@@ -16,24 +16,28 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
-        color: #33b2e5;
+        color: white;
       }
       .header {
-        color: #33b2e5;
+        color: white;
         text-align: center;
       }
       .row {
         display: flex;
         flex-direction: row;
         font-size: large;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
       }
       .radio-input {
         margin: 3em;
+        display: flex;
       }
       .button {
         border: none;
-        color: white;
-        background-color: #33b2e5;
+        color: #33b2e5;
+        background-color: white;
         padding: 0.5em 2em;
         font-size: large;
         margin: auto;
@@ -49,7 +53,7 @@
         align-items: center;
       }
       .form {
-        background-color: white;
+        background-color: #33b2e5;
         width: 30%;
         padding: 2em;
         margin: auto;
@@ -75,7 +79,9 @@
             />
             <label for="choice{{ forloop.counter }}"
               >{{ choice.choice_text }}</label
-            ><br />
+            >
+            , <label>{{choice.votes}}</label>
+            <br />
           </div>
           {% endfor %}
         </div>

@@ -18,13 +18,15 @@ def index(request):
     print(latest_question_list)
     template = loader.get_template('polls/index.html')
     context = {
-        'latest_question_list': latest_question_list ,
-        'all_polls_list':all_polls_list
+        'latest_question_list': latest_question_list,
+        'all_polls_list': all_polls_list
     }
     return render(request, 'polls/index.html', context)
 
 
 def details(request, question_pk):
+    if request.method == 'POST':
+        addVote(request)
     question = get_object_or_404(Question, pk=question_pk)
     return render(request, 'polls/details.html', {'question': question})
 
@@ -39,7 +41,6 @@ def votes(request, question_pk):
 
 @require_POST
 def addPoll(request):
-    print("form is valid")
     question_text = QueryDict(request.body)['your_question']
     choices = QueryDict(request.body)['your_choices']
     new_question = Question(
@@ -51,4 +52,13 @@ def addPoll(request):
         choice = Choice(question=new_question, choice_text=choice_text)
         choice.save()
 
+    return redirect('index')
+
+
+@require_POST
+def addVote(request):
+    id = QueryDict(request.body)['choice']
+    chosen_choice = Choice.objects.get(pk=id)
+    chosen_choice.votes = chosen_choice.votes + 1 
+    chosen_choice.save()
     return redirect('index')
